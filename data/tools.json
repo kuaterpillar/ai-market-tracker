@@ -1,0 +1,28 @@
+{
+  "last_updated": "2026-01-17T14:38:41.497896",
+  "total_tools": 2,
+  "tools": [
+    {
+      "id": "tag:www.producthunt.com,2005:Post/1063468",
+      "name": "Design in Figma using Cursor Agent + MCP",
+      "tagline": "Design automation in Figma using AI and natural language\n          \n          \n            Discussion\n            |\n            Link",
+      "description": "Design automation in Figma using AI and natural language\n          \n          \n            Discussion\n            |\n            Link",
+      "url": "https://www.producthunt.com/products/cursor-ai-for-figma",
+      "votesCount": 0,
+      "createdAt": "2026-01-15T11:03:14-08:00",
+      "topics": [],
+      "ai_summary": "Figma's Design Automation with Cursor Agent + MCP simplifies the design process, saving time and increasing efficiency while generating potential revenue for entrepreneurs."
+    },
+    {
+      "id": "tag:www.producthunt.com,2005:Post/1061878",
+      "name": "folk Assistants",
+      "tagline": "Sales Assistants working 24/7 to help you close more deals\n          \n          \n            Discussion\n            |\n            Link",
+      "description": "Sales Assistants working 24/7 to help you close more deals\n          \n          \n            Discussion\n            |\n            Link",
+      "url": "https://www.producthunt.com/products/folk-2",
+      "votesCount": 0,
+      "createdAt": "2026-01-12T07:51:03-08:00",
+      "topics": [],
+      "ai_summary": "folk Assistants est un outil de marketing qui aide les entrepreneurs à vendre plus en utilisant des assistants en ligne disponibles 24/7, ce qui augmente leur nombre de transactions conclues."
+    }
+  ]
+}
