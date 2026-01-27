@@ -1,0 +1,62 @@
+name: SEO Optimization & Sitemap Generation
+
+on:
+  schedule:
+    # Runs every day at 4 AM UTC (after content generation)
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'src/app/**'
+      - 'data/**'
+
+jobs:
+  optimize-seo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Generate sitemap
+        run: |
+          node scripts/generate-sitemap.js
+
+      - name: Generate robots.txt
+        run: |
+          cat > public/robots.txt << EOF
+          User-agent: *
+          Allow: /
+          Sitemap: https://ai-market-tracker.vercel.app/sitemap.xml
+
+          # Speed up crawling
+          Crawl-delay: 0
+
+          # Allow all search engines
+          User-agent: Googlebot
+          Allow: /
+
+          User-agent: Bingbot
+          Allow: /
+          EOF
+
+      - name: Commit and push if changes
+        run: |
+          git config --global user.name "SEO Bot"
+          git config --global user.email "seo@ai-market-tracker.com"
+          git add public/sitemap.xml public/robots.txt
+          if git diff --staged --quiet; then
+            echo "No SEO changes to commit"
+          else
+            git commit -m "🔍 Auto-update SEO files (sitemap, robots.txt) [skip ci]"
+            git push
+          fi

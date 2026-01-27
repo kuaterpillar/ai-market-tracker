@@ -1,0 +1,53 @@
+name: Daily Content Generation & Publishing
+
+on:
+  schedule:
+    # Runs every day at 3 AM UTC
+    - cron: '0 3 * * *'
+  workflow_dispatch: # Manual trigger
+
+jobs:
+  generate-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install anthropic requests beautifulsoup4 python-dotenv
+
+      - name: Generate blog article with Claude
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          python backend/content_generator.py
+
+      - name: Commit and push if changes
+        run: |
+          git config --global user.name "AI Content Bot"
+          git config --global user.email "bot@ai-market-tracker.com"
+          git add data/blog-posts.json src/app/blog/
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "🤖 Auto-generated daily blog article [skip ci]
+
+            Generated with Claude AI - SEO optimized content
+
+            Co-Authored-By: Claude <noreply@anthropic.com>"
+            git push
+          fi
+
+      - name: Trigger Vercel deployment
+        run: |
+          echo "✅ Changes pushed - Vercel will auto-deploy"
