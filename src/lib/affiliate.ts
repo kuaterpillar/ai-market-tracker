@@ -5,6 +5,7 @@
 
 export interface AffiliateConfig {
   // Add your affiliate IDs here
+  awinPublisherId?: string;
   amazonAssociatesId?: string;
   impactPartnerId?: string;
   cjPublisherId?: string;
@@ -99,6 +100,9 @@ export function getAffiliateLink(
  * Add your IDs in environment variables
  */
 export const AFFILIATE_NETWORKS = {
+  // AWIN (European network)
+  awin: process.env.NEXT_PUBLIC_AWIN_PUBLISHER_ID,
+
   // Software/SaaS tools
   impact: process.env.NEXT_PUBLIC_IMPACT_PARTNER_ID,
   cj: process.env.NEXT_PUBLIC_CJ_PUBLISHER_ID,
@@ -112,6 +116,55 @@ export const AFFILIATE_NETWORKS = {
 };
 
 /**
+ * AWIN Merchant IDs for popular tools
+ * Add more as you join programs in AWIN
+ */
+export const AWIN_MERCHANTS: Record<string, string> = {
+  // Add your AWIN merchant IDs here
+  // Example: 'shopify': '12345',
+  // Find merchant IDs in your AWIN dashboard after joining programs
+};
+
+/**
+ * Create AWIN affiliate link
+ * @param destinationUrl - The final destination URL
+ * @param merchantId - AWIN merchant ID (optional)
+ * @param toolName - Tool name for tracking (optional)
+ */
+export function createAWINLink(
+  destinationUrl: string,
+  merchantId?: string,
+  toolName?: string
+): string {
+  const publisherId = AFFILIATE_NETWORKS.awin;
+
+  if (!publisherId) {
+    // If no AWIN ID, return tracked URL
+    return addAffiliateTracking(destinationUrl, toolName || '');
+  }
+
+  try {
+    // Encode the destination URL
+    const encodedUrl = encodeURIComponent(destinationUrl);
+
+    // Create clickref for tracking (optional)
+    const clickRef = toolName ? encodeURIComponent(toolName.toLowerCase().replace(/\s+/g, '-')) : '';
+
+    if (merchantId) {
+      // If we have a specific merchant ID, use deep linking
+      return `https://www.awin1.com/cread.php?awinmid=${merchantId}&awinaffid=${publisherId}&clickref=${clickRef}&p=${encodedUrl}`;
+    } else {
+      // Generic AWIN link (will work but won't attribute to specific merchant)
+      // Better to add UTM parameters for now
+      return addAffiliateTracking(destinationUrl, toolName || '');
+    }
+  } catch (error) {
+    console.error('Error creating AWIN link:', error);
+    return destinationUrl;
+  }
+}
+
+/**
  * Track affiliate clicks (send to analytics)
  */
 export function trackAffiliateClick(toolName: string, destination: string) {
@@ -121,6 +174,7 @@ export function trackAffiliateClick(toolName: string, destination: string) {
       event_category: 'Affiliate',
       event_label: toolName,
       value: destination,
+      network: 'AWIN',
     });
   }
 

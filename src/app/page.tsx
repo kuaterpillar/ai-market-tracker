@@ -3,6 +3,9 @@ import path from 'path';
 import Link from 'next/link';
 import { getAffiliateLink } from '@/lib/affiliate';
 import AffiliateLink from '@/components/AffiliateLink';
+import CountdownTimer from '@/components/CountdownTimer';
+import TrustBadges from '@/components/TrustBadges';
+import FloatingCTA from '@/components/FloatingCTA';
 
 // --- INTERFACES & LOGIC ---
 interface Tool {
@@ -94,7 +97,7 @@ export default function HomePage() {
         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-blue-600/10 blur-[120px]" />
       </div>
 
-      {/* Header - Sticky & Blurred */}
+      {/* Header - Sticky & Blurred avec URGENCE */}
       <header className="fixed w-full top-0 z-50 border-b border-slate-800/60 bg-slate-950/80 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -105,8 +108,11 @@ export default function HomePage() {
               MarketTracker
             </h1>
           </div>
-          <div className="flex items-center gap-3">
-             <span className="hidden sm:inline-block px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-xs text-slate-400">
+          <div className="flex items-center gap-4">
+             <span className="hidden lg:inline-block">
+               <CountdownTimer />
+             </span>
+             <span className="hidden sm:inline-block lg:hidden px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-xs text-slate-400">
                Updated: <span className="text-violet-400 font-semibold">{formatDate(last_updated)}</span>
              </span>
           </div>
@@ -127,7 +133,7 @@ export default function HomePage() {
         </p>
 
         {/* Social Proof */}
-        <div className="flex items-center justify-center gap-6 text-sm text-slate-400">
+        <div className="flex items-center justify-center gap-6 text-sm text-slate-400 mb-8">
           <div className="flex items-center gap-2">
             <div className="flex -space-x-2">
               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-blue-500 border-2 border-slate-950"></div>
@@ -137,10 +143,13 @@ export default function HomePage() {
             <span className="font-medium">2,847 marketers use these tools</span>
           </div>
         </div>
+
+        {/* Trust Badges */}
+        <TrustBadges />
       </div>
 
       {/* Main Content Grid */}
-      <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+      <main id="tools" className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
         {tools.length === 0 ? (
           <div className="text-center py-20 bg-slate-900/50 border border-slate-800 rounded-2xl backdrop-blur-sm">
             <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-slate-800 mb-6 animate-pulse">
@@ -265,6 +274,9 @@ export default function HomePage() {
           <span className="opacity-50">© 2024 AI Market Tracker • All tools verified</span>
         </p>
       </footer>
+
+      {/* Floating CTA */}
+      <FloatingCTA />
     </div>
   );
 }
