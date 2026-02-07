@@ -1,11 +1,11 @@
 name: Content Tsunami - 3 Articles Daily
 
 on:
-  schedule:
-    # 3 times per day: 6 AM, 12 PM, 6 PM UTC
-    - cron: '0 6 * * *'   # Morning
-    - cron: '0 12 * * *'  # Noon
-    - cron: '0 18 * * *'  # Evening
+  # schedule:
+  #   # 3 times per day: 6 AM, 12 PM, 6 PM UTC
+  #   - cron: '0 6 * * *'   # Morning
+  #   - cron: '0 12 * * *'  # Noon
+  #   - cron: '0 18 * * *'  # Evening
   workflow_dispatch: # Manual trigger
 
 jobs:

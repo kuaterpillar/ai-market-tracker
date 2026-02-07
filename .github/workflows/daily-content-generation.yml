@@ -1,9 +1,9 @@
 name: Daily Content Generation & Publishing
 
 on:
-  schedule:
-    # Runs every day at 3 AM UTC
-    - cron: '0 3 * * *'
+  # schedule:
+  #   # Runs every day at 3 AM UTC
+  #   - cron: '0 3 * * *'
   workflow_dispatch: # Manual trigger
 
 jobs:

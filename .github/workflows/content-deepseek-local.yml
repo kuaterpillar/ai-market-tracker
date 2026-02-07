@@ -1,10 +1,10 @@
 name: Content Tsunami - DeepSeek LOCAL (3x Daily)
 
 on:
-  schedule:
-    - cron: '0 6 * * *'   # 6 AM
-    - cron: '0 12 * * *'  # 12 PM
-    - cron: '0 18 * * *'  # 6 PM
+  # schedule:
+  #   - cron: '0 6 * * *'   # 6 AM
+  #   - cron: '0 12 * * *'  # 12 PM
+  #   - cron: '0 18 * * *'  # 6 PM
   workflow_dispatch:
 
 jobs:
